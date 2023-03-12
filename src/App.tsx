@@ -1,26 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+//import useLocalAuth from './Hooks/useLocalAuth';
+import Main from './Main';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  // const { loginData, setData } = useLocalAuth()
+  // if (!loginData || loginData.set === false) { return (<div className="App"> <Login setData={setData} /> </div>) }
+  // else { return (<div className="App"> <Main /> </div>); }
+  return (<div className="App"> <Main /> </div>);
 }
 
 export default App;
