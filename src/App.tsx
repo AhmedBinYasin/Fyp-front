@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 //import useLocalAuth from './Hooks/useLocalAuth';
 import Main from './Main';
+import '../src/styles/main.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
