@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -13,15 +13,25 @@ import axios from 'axios';
 
 
 
-function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
+function EditReminders({ Adapter }: { Adapter: IAdapter }) {
+    const [previous, setPrevious] = useState<any>()
     const [time, setTime] = useState<dayjs.Dayjs>(dayjs());
     const [date, setDate] = useState<dayjs.Dayjs>(dayjs());
-    const [Message, setMessage] = useState<string>('');
+    const [Message, setMessage] = useState<string>();
+
+    useEffect(() => {
+        let initData = Adapter.pull()
+        setDate(dayjs(initData[0]));
+        setTime(dayjs(initData[0]));
+        setMessage(initData[1]);
+        setPrevious(initData)
+    }, []);
+
     async function ConfirmAdd() {
         let Date: string = date.format('YYYY-MM-DD');
         let Time: string = time.format('HH:mm')
         try {
-            let status = (await axios.post(`http://localhost:5000/api/Reminders/AddNewReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message })).data.status
+            let status = (await axios.post(`http://localhost:5000/api/Reminders/UpdateReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message, previous: previous })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }
@@ -38,13 +48,13 @@ function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <div className='row'>
                                 <div className='TimePicker'>
-                                    <StaticTimePicker defaultValue={dayjs()} value={time} disablePast onChange={(event) => { event ? setTime(event) : setTime(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
+                                    <StaticTimePicker value={time} disablePast onChange={(event) => { event ? setTime(event) : setTime(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
                                 </div>
                                 <div className='DatePicker'>
-                                    <StaticDatePicker defaultValue={dayjs()} value={date} disablePast onChange={(event) => { event ? setDate(event) : setDate(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
+                                    <StaticDatePicker value={date} disablePast onChange={(event) => { event ? setDate(event) : setDate(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
                                 </div>
                                 <div className='MobileDatePicker'>
-                                    <DatePicker defaultValue={dayjs()} value={date} disablePast onChange={(event) => { event ? setDate(event) : setDate(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
+                                    <DatePicker value={date} disablePast onChange={(event) => { event ? setDate(event) : setDate(dayjs()) }} sx={{ backgroundColor: 'rgb(255,255,255,0.0)' }} />
                                 </div>
                             </div>
                         </LocalizationProvider>
@@ -53,8 +63,8 @@ function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
                 <Container className='MainSetings'>
                     <h3 className='text-white-50'>Type Message</h3>
                     <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} >
-                        <div className="form-outline" style={{width:'100%'}}>
-                            <textarea className="form-control" id="textArea" rows={4} onChange={(event:ChangeEvent<HTMLTextAreaElement>)=>{setMessage(event.target.value)}} ></textarea>
+                        <div className="form-outline" style={{ width: '100%' }}>
+                            <textarea className="form-control" id="textArea" rows={4} value={Message} onChange={(event: ChangeEvent<HTMLTextAreaElement>) => { setMessage(event.target.value) }} ></textarea>
                         </div>
                     </div>
                 </Container>
@@ -69,4 +79,4 @@ function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
     )
 }
 
-export default AddNewReminders
+export default EditReminders

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import Container from 'react-bootstrap/Container';
-import '../styles/volumeSlider.css'
 import Chart from 'react-apexcharts'
+import { IAdapter } from '../Components/types';
 
 
 
 
-function Home() {
+function Home({Adapter}:{Adapter:IAdapter}) {
     let options = {
         chart: { id: "alerts" },
         xaxis: { categories: ["Baby Cry", "Door Knock", "Door Bell", "Machineary", "Talking"] },
@@ -51,7 +51,7 @@ function Home() {
             <Container>
                 <div className='Border FontStyle1 footer  d-flex align-items-center' >
                     <button className="Icon-btn-menu Icon-btn-menu-start"><i className="fa fa-home"></i><p className="Icon-btn-menu-text MobileDisable">Home</p></button>
-                    <button className="Icon-btn-menu"><i className="fa fa-book"></i><p className="Icon-btn-menu-text MobileDisable">Reminders</p></button>
+                    <button className="Icon-btn-menu" onClick={()=>{Adapter.open('Reminders')}}><i className="fa fa-book"></i><p className="Icon-btn-menu-text MobileDisable">Reminders</p></button>
                     <button className="Icon-btn-menu"><i className='fa fa-assistive-listening-systems'></i><p className="Icon-btn-menu-text MobileDisable">Speach to Text</p></button>
                     <button className="Icon-btn-menu"><i className="fa fa-list-alt"></i><p className="Icon-btn-menu-text MobileDisable">History</p></button>
                     <button className="Icon-btn-menu Icon-btn-menu-end"><i className="fa fa-gears"></i><p className="Icon-btn-menu-text MobileDisable">Settings</p></button>

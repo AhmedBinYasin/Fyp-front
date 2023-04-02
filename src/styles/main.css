@@ -128,8 +128,8 @@
     font-family: "Times New Roman", Times, serif;
 }
 
-.transparent1 {
-    opacity: 1 !important;
+.transparent3 {
+    opacity: 0.3 !important;
 }
 
 .solid {
@@ -194,6 +194,9 @@ body {
 
 .Icon-btn-menu-end {
     border-radius: 0px 10px 10px 0px;
+}
+.Icon-btn-menu-full {
+    border-radius: 10px 10px 10px 10px;
 }
 
 .Icon-btn-menu:hover {

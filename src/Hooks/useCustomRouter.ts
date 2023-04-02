@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 
-interface IRouter {
+export interface IRouter {
     active: string;
     stack: string[]
 }
@@ -34,18 +34,22 @@ const reducer = (state: IRouter, action: IAction) => {
     }
 };
 const initialState: IRouter = {
-    active: "",
-    stack: [],
+    active: "Home",
+    stack: ["Home"],
 }
 
 function useCustomRouter() {
     const [Router, dispatch] = useReducer(reducer, initialState);
+    const [pullData,pushData]=useState<any>({})
     const open = (relation: string) => { dispatch({ type: EAction.New, payload: relation }) };
-    const Return = (relation: string) => { dispatch({ type: EAction.Return, payload: relation }) };
+    const Return = () => { dispatch({ type: EAction.Return, payload: '' }) };
+    const pull=()=>{return pullData};
+    const push=(...args:any)=>{return pushData({...args});};
     return {
-        Adapter: { open, Return },
+        Adapter: { open, Return ,pull,push},
         Router: Router
     }
 }
 
 export default useCustomRouter
+
