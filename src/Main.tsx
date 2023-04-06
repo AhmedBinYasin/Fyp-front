@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import useCustomRouter, { IRouter } from './Hooks/useCustomRouter'
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import SideNav from './Components/SideNavContents';
@@ -18,6 +18,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } 
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import EditReminders from './Pages/EditReminders';
+import ReAddReminders from './Pages/ReAddReminders';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -41,6 +42,7 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'AddNewReminders' && (<AddNewReminders Adapter={Adapter} />)}
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
+          {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
         </div>
       </Container>
       <div className='responsiveDisable'>
@@ -64,6 +66,7 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'AddNewReminders' && (<AddNewReminders Adapter={Adapter} />)}
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
+          {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
         </div>
       </div>
     </>

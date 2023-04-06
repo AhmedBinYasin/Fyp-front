@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { IAdapter } from '../Components/types';
 
-function ReminderLists({ Date, Message, state }: { Date: Date, Message: string, state: string }) {
+function ReminderLists({ Date, Message, state,Adapter }: { Date: Date, Message: string, state: string,Adapter: IAdapter }) {
+    
     return (
-        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' }} >
+        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' }} onClick={() => { Adapter.push(Date, Message); Adapter.open('ReAddReminder') }}>
             <div className='row'>
                 <p>On:{" " + Date.toDateString()}</p>
             </div>
@@ -54,6 +55,7 @@ function RemindersHistory({ Adapter }: { Adapter: IAdapter }) {
         for (let index = 1; index < page.Length; index++) {
             const element = <li className="page-item " onClick={() => { setPageProps({ ...page, PageNo: index }) }}><div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }}>{index}</div></li>
             pagebox.push(element)
+            if(index>7){break}
         }
         return pagebox
     }
@@ -65,12 +67,12 @@ function RemindersHistory({ Adapter }: { Adapter: IAdapter }) {
         <>
             <div>
                 <Container>
-                    <div className='d-flex gap-2 align-items-center'><h3 className='text-white-50'>Reminders </h3></div>
+                    <div className='d-flex gap-2 align-items-center'><h3 className='text-white-50'>Reminders History</h3></div>
                 </Container>
                 <Container className='MainSetings'>
                     <>
                         {ReminderList.map(reminder => {
-                            return <ReminderLists Date={new Date(reminder.Date)} Message={reminder.Message} state={reminder.state} />
+                            return <ReminderLists Date={new Date(reminder.Date)} Message={reminder.Message} state={reminder.state} Adapter={Adapter} />
                         })}
                     </>
                 </Container>

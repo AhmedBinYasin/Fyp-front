@@ -5,6 +5,11 @@ import NodeIcon from './Icons/NodeIcon'
 import ReminderIcon from './Icons/ReminderIcon'
 import { OnClick } from './SidemenuEvents'
 import { IAdapter } from './types'
+import SpeachIcon from './Icons/SpeachIcon'
+import HistoryIcon from './Icons/ListIcon'
+import AdminIcon from './Icons/OptionsIcon'
+import SettingsIcon from './Icons/SettingsIcon'
+import AboutIcon from './Icons/AboutIcon'
 
 function NevLinks({ name, icon, Router, Handeler }: { name: string, icon: JSX.Element, Router: IRouter, Handeler: () => void }) {
   if (Router.active === name) {
@@ -44,10 +49,25 @@ function Sidemenu({ Router, Adapter }: { Router: IRouter, Adapter: IAdapter }) {
             <NevLinks name='Home' icon={<HomeIcon />} Router={Router} Handeler={() => { if(Router.active!=='Home'){ Adapter.open('Home'); } }}></NevLinks>
           </li>
           <li className="nav-item">
-            <NevLinks name='Reminders' icon={<ReminderIcon />} Router={Router} Handeler={() => { console.log('first');if(Router.active!=='Reminders'){ Adapter.open('Reminders'); } }}></NevLinks>
+            <NevLinks name='Reminders' icon={<ReminderIcon />} Router={Router} Handeler={() => {if(Router.active!=='Reminders'){ Adapter.open('Reminders'); } }}></NevLinks>
           </li>
           <li className="nav-item">
-            <NevLinks name='Connections' icon={<NodeIcon />} Router={Router}  Handeler={() => { OnClick(Router.active, Adapter, 'Connections') }}></NevLinks>
+            <NevLinks name='Connections' icon={<NodeIcon />} Router={Router}  Handeler={() => { if(Router.active!=='Connections'){ Adapter.open('Connections'); } }}></NevLinks>
+          </li>
+          <li className="nav-item">
+            <NevLinks name='Speach To Text' icon={<SpeachIcon />} Router={Router} Handeler={() => { if(Router.active!=='Speach To Text'){ Adapter.open('Speach To Text'); } }}></NevLinks>
+          </li>
+          <li className="nav-item">
+            <NevLinks name='History' icon={<HistoryIcon />} Router={Router} Handeler={() => {if(Router.active!=='History'){ Adapter.open('History'); } }}></NevLinks>
+          </li>
+          <li className="nav-item">
+            <NevLinks name='AdminLogs' icon={<AdminIcon />} Router={Router}  Handeler={() => { if(Router.active!=='AdminLogs'){ Adapter.open('AdminLogs'); } }}></NevLinks>
+          </li>
+          <li className="nav-item">
+            <NevLinks name='AdminSettings' icon={<SettingsIcon />} Router={Router}  Handeler={() => { if(Router.active!=='AdminSettings'){ Adapter.open('AdminSettings'); } }}></NevLinks>
+          </li>
+          <li className="nav-item">
+            <NevLinks name='About' icon={<AboutIcon />} Router={Router}  Handeler={() => { if(Router.active!=='About'){ Adapter.open('About'); } }}></NevLinks>
           </li>
         </ul>
       </div>

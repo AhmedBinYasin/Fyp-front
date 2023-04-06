@@ -12,17 +12,17 @@ export function PushAlert({ notifications, Adapter ,AccNotification}: { notifica
                 </Container>
                 <Container className='MainSetings'style={{height:'80vh'}}>
                     <>
-                        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' }} >
+                        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' ,height:'80vh'}} >
                             <div className='row'>
-                                <p>On:{" " + notifications?.Date.toDateString()}</p>
+                                <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>On:{" " + notifications?.Date.toDateString()}</p>
                             </div>
                             <div className='row' >
-                                <div style={{ width: '100%' }}>
-                                    <h2>{notifications?.Date.toTimeString().substring(0, 5)}</h2>
+                                <div style={{ width: '100%' ,display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <h2 style={{ fontSize:'14vh',fontWeight:'bold'}}>{notifications?.Date.toTimeString().substring(0, 5)}</h2>
                                 </div>
                             </div>
                             <div className='row'>
-                                <p>{notifications?.Message}</p>
+                                <p style={{ fontSize:'2rem',fontWeight:'bold', marginTop:'2rem', width: '100%' ,textAlign:'center'}}>{notifications?.Message}</p>
                             </div>
                         </div>
                     </>

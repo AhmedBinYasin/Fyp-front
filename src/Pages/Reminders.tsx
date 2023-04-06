@@ -17,22 +17,22 @@ function ReminderLists({ actHandler, Date, Message, Enable, Adapter }: { actHand
         }
     }
     return (
-        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' }} onClick={() => { Adapter.push(Date, Message); Adapter.open('EditReminder') }} >
-            <div className='row'>
+        <div className='Border FontStyle1  myCard offset18' style={{ marginBottom: '10px' }} >
+            <div className='row' onClick={() => { Adapter.push(Date, Message); Adapter.open('EditReminder') }}>
                 <p>On:{" " + Date.toDateString()}</p>
             </div>
             <div className='row' >
-                <div style={{ width: '80%' }}>
+                <div style={{ width: '80%' }} onClick={() => { Adapter.push(Date, Message); Adapter.open('EditReminder') }}>
                     <h2>{Date.toTimeString().substring(0, 5)}</h2>
                 </div>
                 <div style={{ width: '20%' }}>
                     <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" id="mySwitch" name="darkmode" value="yes" checked={Enable} onChange={() => { Change() }} />
-                        {Enable ? <label className="form-check-label MobileDisable" htmlFor="mySwitch">Enabled</label> : <label className="form-check-label" htmlFor="mySwitch">Disabled</label>}
+                        {Enable ? <label className="form-check-label MobileDisable" htmlFor="mySwitch">Enabled</label> : <label className="form-check-label  MobileDisable" htmlFor="mySwitch">Disabled</label>}
                     </div>
                 </div>
             </div>
-            <div className='row'>
+            <div className='row' onClick={() => { Adapter.push(Date, Message); Adapter.open('EditReminder') }}>
                 <p>{Message}</p>
             </div>
         </div>
@@ -68,17 +68,16 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
             console.log(error)
         }
     }
-
     function pageBox() {
         let pagebox: Array<JSX.Element> = []
         for (let index = 1; index < page.Length; index++) {
             const element = <li className="page-item "key={index} onClick={()=>{setPageProps({...page,PageNo:index})}} ><div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }}  >{index}</div></li>
             pagebox.push(element)
+            if(index>5){break}
         }
         return pagebox
     }
-    useEffect(() => { getData(page.PageNo); }, [page.PageNo])
-    useEffect(() => { activate(false); }, [sync])
+    useEffect(() => { getData(page.PageNo);activate(false); }, [page.PageNo,sync])
     useEffect(() => { getPageLength(); }, [])
     return (
         <>

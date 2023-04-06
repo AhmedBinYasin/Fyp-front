@@ -9,7 +9,7 @@ import { IAdapter } from '../Components/types';
 function Home({Adapter}:{Adapter:IAdapter}) {
     let options = {
         chart: { id: "alerts" },
-        xaxis: { categories: ["Baby Cry", "Door Knock", "Door Bell", "Machineary", "Talking"] },
+        xaxis: { categories: ["Baby Cry", "Door Knock", "Machineary", "Talking"] },
         plotOptions: {
             bar: {
                 distributed: true,
@@ -20,7 +20,7 @@ function Home({Adapter}:{Adapter:IAdapter}) {
         dataLabels: { style: { colors: ['#FFFFFF'] } },
 
     }
-    const series = [{ data: [30, 40, 45, 50, 49], }]
+    const series = [{ data: [30, 40, 45, 50], }]
     return (
         <>
             <div>
@@ -54,7 +54,7 @@ function Home({Adapter}:{Adapter:IAdapter}) {
                     <button className="Icon-btn-menu" onClick={()=>{Adapter.open('Reminders')}}><i className="fa fa-book"></i><p className="Icon-btn-menu-text MobileDisable">Reminders</p></button>
                     <button className="Icon-btn-menu"><i className='fa fa-assistive-listening-systems'></i><p className="Icon-btn-menu-text MobileDisable">Speach to Text</p></button>
                     <button className="Icon-btn-menu"><i className="fa fa-list-alt"></i><p className="Icon-btn-menu-text MobileDisable">History</p></button>
-                    <button className="Icon-btn-menu Icon-btn-menu-end"><i className="fa fa-gears"></i><p className="Icon-btn-menu-text MobileDisable">Settings</p></button>
+                    <button className="Icon-btn-menu Icon-btn-menu-end"><i className="fa fa-info"></i><p className="Icon-btn-menu-text MobileDisable">About</p></button>
                 </div>
             </Container>
         </>
