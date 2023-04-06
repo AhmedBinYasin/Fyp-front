@@ -43,6 +43,7 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
+          {Router.active === 'Speach To Text' && (<></>)}
         </div>
       </Container>
       <div className='responsiveDisable'>
@@ -67,6 +68,7 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
+          {Router.active === 'Speach To Text' && (<></>)}
         </div>
       </div>
     </>
