@@ -19,6 +19,8 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import EditReminders from './Pages/EditReminders';
 import ReAddReminders from './Pages/ReAddReminders';
+import Connections from './Pages/Connections';
+import SpeachToText from './Pages/SpeachToText';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -43,7 +45,8 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
-          {Router.active === 'Speach To Text' && (<></>)}
+          {Router.active === 'Speach To Text' && (<SpeachToText/>)}
+          {Router.active === 'Connections' && (<Connections/>)}
         </div>
       </Container>
       <div className='responsiveDisable'>
@@ -68,7 +71,8 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'RemindersHistory' && (<RemindersHistory Adapter={Adapter} />)}
           {Router.active === 'EditReminder' && (<EditReminders Adapter={Adapter} />)}
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
-          {Router.active === 'Speach To Text' && (<></>)}
+          {Router.active === 'Speach To Text' && (<SpeachToText/>)}
+          {Router.active === 'Connections' && (<Connections/>)}
         </div>
       </div>
     </>
@@ -93,7 +97,7 @@ function Main() {
     socket.on('ActivateReminderResponse', (data: { UserName: string; Date: Date; Message: string; }) => {
       if (data.UserName === 'Ahmed')
         setMessage({ Date: new Date(data.Date), Message: data.Message });
-        handleShowAlarm()
+      handleShowAlarm()
     });
   }, []);
 
@@ -116,18 +120,19 @@ function Main() {
             hideBackdrop
             TransitionComponent={Transition}
             keepMounted
-            PaperProps={{sx:{position:'fixed',top:10}}}
+            PaperProps={{ sx: { position: 'fixed', top: 10 } }}
             onClose={handleCloseAlarm}
             aria-describedby="alert-dialog-slide-description"
           >
             <DialogTitle>{"Reminder Alarm"}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-              <p> {"" + notifications.Date?.toDateString() + ', ' + notifications.Date?.toTimeString().substring(0, 5) + '\n' + notifications.Message} </p>
+                <p> {"" + notifications.Date?.toDateString() + ', ' + notifications.Date?.toTimeString().substring(0, 5)} </p>
+                <p>{notifications.Message}</p>
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseAlarm}>Disagree</Button>
+              <Button onClick={handleCloseAlarm}>OK</Button>
             </DialogActions>
           </Dialog>
         </>
