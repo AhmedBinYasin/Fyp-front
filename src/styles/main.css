@@ -54,6 +54,9 @@
     .MobileDatePicker {
         display: none;
     }
+    .nodeBox{
+        width: 30.33% !important;
+    }
 
 }
 
@@ -92,6 +95,9 @@
         align-items: center;
         display: flex;
         justify-content: center;
+    }
+    .nodeBox{
+        width: 66.33% !important;
     }
 }
 

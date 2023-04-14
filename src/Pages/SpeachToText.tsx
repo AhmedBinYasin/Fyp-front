@@ -1,8 +1,47 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useState, useRef } from 'react';
 import { Container } from 'react-bootstrap'
 
 function SpeachToText() {
     const [result, set] = useState<string | undefined>('abc');
+    const [recording, setRecording] = useState<boolean>(false);
+    const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+    const chunksRef = useRef<Blob[]>([]);
+
+    const startRecording = () => {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+            mediaRecorderRef.current = new MediaRecorder(stream);
+            mediaRecorderRef.current.addEventListener('dataavailable', (event) => { chunksRef.current.push(event.data); });
+            mediaRecorderRef.current.addEventListener('stop', () => {
+                const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+                setAudioBlob(blob);
+                chunksRef.current = [];
+                sendAudioToServer(blob)
+                mediaRecorderRef.current = null;
+            });
+            mediaRecorderRef.current.start();
+            setRecording(true);
+        })
+            .catch((error) => { console.error('Error accessing microphone:', error); });
+    }
+    const stopRecording = () => {
+        if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop();
+            console.log(audioBlob)
+            setRecording(false);
+        }
+    }
+    const sendAudioToServer = async (blob: Blob) => {
+        try {
+          const formData = new FormData();
+          formData.append('audio', blob);
+          const response = await axios.post('http://localhost:5000//api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
+        } catch (error) {
+          console.error('Error sending audio to server:', error);
+        }
+      }
+
     return (
         <>
             <div>
@@ -11,7 +50,7 @@ function SpeachToText() {
                 </Container>
                 <Container className='MainSetings'>
                     <h3 className='text-white-50' style={{ textAlign: 'center' }}>Tap to record</h3>
-                    <div className='row' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                    <div className='row' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} onMouseDown={startRecording} onMouseUp={stopRecording} >
                         <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex', width: '30.33%', marginLeft: '1.5%', marginRight: '1.5%' }} >
                             <div className='row'>
                                 <i className="fa fa-microphone" style={{ fontSize: '7em', textAlign: 'center' }} aria-hidden="true" />
@@ -19,6 +58,15 @@ function SpeachToText() {
                         </div>
                     </div>
                 </Container>
+                {audioBlob && (
+                    <Container className='MainSetings MobileDisable'>
+                        <div className='row' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                            <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex', width: '30.33%', marginLeft: '1.5%', marginRight: '1.5%' }} >
+                                <audio src={URL.createObjectURL(audioBlob)} controls />
+                            </div>
+                        </div>
+                    </Container>
+                )}
                 {(result) && (
                     <Container className='MainSetings'>
                         <h3 className='text-white-50' style={{ textAlign: 'center' }}>Text Output</h3>
