@@ -64,9 +64,6 @@ function Sidemenu({ Router, Adapter }: { Router: IRouter, Adapter: IAdapter }) {
             <NevLinks name='AdminLogs' icon={<AdminIcon />} Router={Router}  Handeler={() => { if(Router.active!=='AdminLogs'){ Adapter.open('AdminLogs'); } }}></NevLinks>
           </li>
           <li className="nav-item">
-            <NevLinks name='AdminSettings' icon={<SettingsIcon />} Router={Router}  Handeler={() => { if(Router.active!=='AdminSettings'){ Adapter.open('AdminSettings'); } }}></NevLinks>
-          </li>
-          <li className="nav-item">
             <NevLinks name='About' icon={<AboutIcon />} Router={Router}  Handeler={() => { if(Router.active!=='About'){ Adapter.open('About'); } }}></NevLinks>
           </li>
         </ul>

@@ -31,7 +31,14 @@ function EditReminders({ Adapter }: { Adapter: IAdapter }) {
         let Date: string = date.format('YYYY-MM-DD');
         let Time: string = time.format('HH:mm')
         try {
-            let status = (await axios.post(`http://localhost:5000/api/Reminders/UpdateReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message, previous: previous })).data.status
+            let status = (await axios.post(`http://192.168.72.101:5000/api/Reminders/UpdateReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message, previous: previous })).data.status
+            if (status) { Adapter.Return(); }
+        }
+        catch (error) { console.log(error) }
+    }
+    async function Confirmdelete() {
+        try {
+            let status = (await axios.post(`http://192.168.72.101:5000/api/Reminders/DeleteReminder`, { UserName: 'Ahmed', Message: Message, previous: previous })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }
@@ -43,7 +50,6 @@ function EditReminders({ Adapter }: { Adapter: IAdapter }) {
                     <div className='d-flex gap-2 align-items-center'><h3 className='text-white-50'>Reminders </h3></div>
                 </Container>
                 <Container className='MainSetings'>
-                    <h3 className='text-white-50'>Select time</h3>
                     <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} >
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <div className='row'>
@@ -72,6 +78,7 @@ function EditReminders({ Adapter }: { Adapter: IAdapter }) {
             <Container>
                 <div className='Border FontStyle1 footer  d-flex align-items-center' >
                     <button className="Icon-btn-menu Icon-btn-menu-start" onClick={() => { ConfirmAdd() }} style={{ width: '50%' }}><i className="fa fa-check"></i><p className="Icon-btn-menu-text MobileDisable">Confirm</p></button>
+                    <button className="Icon-btn-menu Icon-btn-menu-start" onClick={() => { Confirmdelete() }} style={{ width: '50%' }}><i className="fa fa-trash"></i><p className="Icon-btn-menu-text MobileDisable">Confirm</p></button>
                     <button className="Icon-btn-menu Icon-btn-menu-end" onClick={() => { Adapter.Return() }} style={{ width: '50%' }}><i className="fa fa-times"></i><p className="Icon-btn-menu-text MobileDisable">Cancel</p></button>
                 </div>
             </Container>

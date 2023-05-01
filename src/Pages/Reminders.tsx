@@ -8,7 +8,7 @@ import { IAdapter } from '../Components/types';
 function ReminderLists({ actHandler, Date, Message, Enable, Adapter }: { actHandler: () => any, Date: Date, Message: string, Enable: boolean, Adapter: IAdapter }) {
     async function Change() {
         try {
-            let { status } = (await axios.post(`http://localhost:5000/api/Reminders/EnableReminder`, { UserName: 'Ahmed', Date: Date, Message: Message, Enable: Enable })).data as { status: boolean, Message: string | undefined, error: any }
+            let { status } = (await axios.post(`http://192.168.72.101:5000/api/Reminders/EnableReminder`, { UserName: 'Ahmed', Date: Date, Message: Message, Enable: Enable })).data as { status: boolean, Message: string | undefined, error: any }
             if (status === true) {
                 actHandler()
             }
@@ -45,7 +45,7 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
     const [ReminderList, setReminderList] = useState<Array<{ Date: string, Message: string, Enable: boolean }>>([])
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://localhost:5000/api/Reminders/GetReminder`, { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, Enable: boolean }>
+            let List = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminder`, { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, Enable: boolean }>
             setReminderList(List)
         } catch (error) {
             console.log(error)
@@ -56,7 +56,7 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://localhost:5000/api/Reminders/GetReminderLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminderLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 5 === 0) {
                 length = (length / 5)
             }
@@ -71,13 +71,13 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
     function pageBox() {
         let pagebox: Array<JSX.Element> = []
         for (let index = 1; index < page.Length; index++) {
-            const element = <li className="page-item "key={index} onClick={()=>{setPageProps({...page,PageNo:index})}} ><div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }}  >{index}</div></li>
+            const element = <li className="page-item " key={index} onClick={() => { setPageProps({ ...page, PageNo: index }) }} ><div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }}  >{index}</div></li>
             pagebox.push(element)
-            if(index>5){break}
+            if (index > 5) { break }
         }
         return pagebox
     }
-    useEffect(() => { getData(page.PageNo);activate(false); }, [page.PageNo,sync])
+    useEffect(() => { getData(page.PageNo); activate(false); }, [page.PageNo, sync])
     useEffect(() => { getPageLength(); }, [])
     return (
         <>
@@ -92,27 +92,28 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
                         })}
                     </>
                 </Container>
-
             </div>
-            <Container>
-                <div className='row'>
-                    <nav aria-label="Page navigation  example" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <ul className="pagination">
-                            <li className="page-item" onClick={()=>{if(page.PageNo>1){setPageProps({...page,PageNo:page.PageNo-1})}}}>
-                                <div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }} aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </div>
-                            </li>
-                            <>{pageBox()}</>
-                            <li className="page-item" onClick={()=>{if(page.PageNo<page.Length){setPageProps({...page,PageNo:page.PageNo+1})}}}>
-                                <div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }} aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </Container>
+            {page.Length > 1 && (
+                <Container>
+                    <div className='row'>
+                        <nav aria-label="Page navigation  example" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <ul className="pagination">
+                                <li className="page-item" onClick={() => { if (page.PageNo > 1) { setPageProps({ ...page, PageNo: page.PageNo - 1 }) } }}>
+                                    <div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }} aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </div>
+                                </li>
+                                <>{pageBox()}</>
+                                <li className="page-item" onClick={() => { if (page.PageNo < page.Length) { setPageProps({ ...page, PageNo: page.PageNo + 1 }) } }}>
+                                    <div className="page-link transparent3" style={{ color: '#000000f5', cursor: 'pointer', fontWeight: 'bold' }} aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </Container>
+            )}
             <Container>
                 <div className='Border FontStyle1 footer  d-flex align-items-center' >
                     <button className="Icon-btn-menu Icon-btn-menu-start" onClick={() => { Adapter.open('AddNewReminders') }} style={{ width: '33.33%' }}><i className="fa fa-plus-square-o"></i><p className="Icon-btn-menu-text MobileDisable">New</p></button>

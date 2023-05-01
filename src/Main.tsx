@@ -21,6 +21,8 @@ import EditReminders from './Pages/EditReminders';
 import ReAddReminders from './Pages/ReAddReminders';
 import Connections from './Pages/Connections';
 import SpeachToText from './Pages/SpeachToText';
+import { AdminLogs, AlertHistory } from './Pages/Logs';
+import About from './Pages/About';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -47,6 +49,9 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
           {Router.active === 'Speach To Text' && (<SpeachToText/>)}
           {Router.active === 'Connections' && (<Connections/>)}
+          {Router.active === 'AdminLogs' && (<AdminLogs/>)}
+          {Router.active === 'History' && (<AlertHistory/>)}
+          {Router.active === 'About' && (<About/>)}
         </div>
       </Container>
       <div className='responsiveDisable'>
@@ -58,7 +63,7 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           </Offcanvas.Header>
           <Offcanvas.Body>
             <hr />
-            <SideNav Router={Router} Adapter={Adapter} />
+            <SideNav Router={Router} Adapter={Adapter} handleClose={handleClose} />
           </Offcanvas.Body>
         </Offcanvas>
       </div>
@@ -73,6 +78,9 @@ function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: I
           {Router.active === 'ReAddReminder' && (<ReAddReminders Adapter={Adapter} />)}
           {Router.active === 'Speach To Text' && (<SpeachToText/>)}
           {Router.active === 'Connections' && (<Connections/>)}
+          {Router.active === 'AdminLogs' && (<AdminLogs/>)}
+          {Router.active === 'History' && (<AlertHistory/>)}
+          {Router.active === 'About' && (<About/>)}
         </div>
       </div>
     </>

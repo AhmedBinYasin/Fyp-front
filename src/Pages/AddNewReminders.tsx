@@ -21,7 +21,7 @@ function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
         let Date: string = date.format('YYYY-MM-DD');
         let Time: string = time.format('HH:mm')
         try {
-            let status = (await axios.post(`http://localhost:5000/api/Reminders/AddNewReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message })).data.status
+            let status = (await axios.post(`http://192.168.72.101:5000/api/Reminders/AddNewReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }
@@ -30,10 +30,10 @@ function AddNewReminders({ Adapter }: { Adapter: IAdapter }) {
         <>
             <div>
                 <Container>
-                    <div className='d-flex gap-2 align-items-center'><h3 className='text-white-50'>Reminders </h3></div>
+                    <div className='d-flex gap-2 align-items-center'><h3 className='text-white-50'>Reminders: Select time </h3></div>
                 </Container>
                 <Container className='MainSetings'>
-                    <h3 className='text-white-50'>Select time</h3>
+                    {/* <h3 className='text-white-50'>Select time</h3> */}
                     <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} >
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <div className='row'>

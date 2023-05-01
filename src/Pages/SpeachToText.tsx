@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Container } from 'react-bootstrap'
 
 function SpeachToText() {
-    const [result, set] = useState<string | undefined>('abc');
+    const [result, setText] = useState<string | undefined>();
     const [recording, setRecording] = useState<boolean>(false);
     const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -19,6 +19,7 @@ function SpeachToText() {
                 chunksRef.current = [];
                 sendAudioToServer(blob)
                 mediaRecorderRef.current = null;
+                console.log('first')
             });
             mediaRecorderRef.current.start();
             setRecording(true);
@@ -35,8 +36,8 @@ function SpeachToText() {
     const sendAudioToServer = async (blob: Blob) => {
         try {
           const formData = new FormData();
-          formData.append('audio', blob);
-          const response = await axios.post('http://localhost:5000//api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
+          formData.append('file', blob);
+          const response = await axios.post('http://localhost:5000/api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
         } catch (error) {
           console.error('Error sending audio to server:', error);
         }
@@ -53,7 +54,7 @@ function SpeachToText() {
                     <div className='row' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }} onMouseDown={startRecording} onMouseUp={stopRecording} >
                         <div className='Border FontStyle1  myCard offset18' style={{ alignItems: 'center', justifyContent: 'center', display: 'flex', width: '30.33%', marginLeft: '1.5%', marginRight: '1.5%' }} >
                             <div className='row'>
-                                <i className="fa fa-microphone" style={{ fontSize: '7em', textAlign: 'center' }} aria-hidden="true" />
+                                <i className="fa fa-microphone audioButton" style={{ fontSize: '7em', textAlign: 'center' }} aria-hidden="true" />
                             </div>
                         </div>
                     </div>

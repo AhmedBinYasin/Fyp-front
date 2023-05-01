@@ -12,7 +12,7 @@ function Login({ setData }: { setData: (state: object) => void; }) {
     function changeToSignup() { onChange('Signup'); setInput({ UserName: '', Password: '', ReEnter: '' }); setMessage(undefined) }
     async function onLogin() {
         try {
-            let { UserName, Message, error } = (await axios.post('http://localhost:5000/api/auth/Login', { UserName: Input.UserName, Password: md5(Input.Password) })).data
+            let { UserName, Message, error } = (await axios.post('http://192.168.72.101:5000/api/auth/Login', { UserName: Input.UserName, Password: md5(Input.Password) })).data
             if (UserName) { setData(UserName) }
             else if (Message) { setMessage(Message) }
             else { console.log(error) }
@@ -22,7 +22,7 @@ function Login({ setData }: { setData: (state: object) => void; }) {
     async function onSignup() {
         if (Input.Password === Input.ReEnter) {
             try {
-                let { UserName, Message, error } = (await axios.post('http://localhost:5000/api/auth/CreateUser', { UserName: Input.UserName, Password: md5(Input.Password) })).data
+                let { UserName, Message, error } = (await axios.post('http://192.168.72.101:5000/api/auth/CreateUser', { UserName: Input.UserName, Password: md5(Input.Password) })).data
                 if (UserName) { setData(UserName) }
                 else if (Message) { setMessage(Message) }
                 else { console.log(error) }

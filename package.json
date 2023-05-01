@@ -24,6 +24,7 @@
     "dayjs": "^1.11.7",
     "material-react-table": "^1.9.1",
     "md5": "^2.3.0",
+    "mdb-react-ui-kit": "^6.0.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.7.2",
