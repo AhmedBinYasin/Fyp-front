@@ -53,8 +53,8 @@ function Home({Adapter}:{Adapter:IAdapter}) {
                     <button className="Icon-btn-menu Icon-btn-menu-start" onClick={()=>{Adapter.open('Connections')}}><i className="fa fa-plug"></i><p className="Icon-btn-menu-text MobileDisable">Connections</p></button>
                     <button className="Icon-btn-menu" onClick={()=>{Adapter.open('Reminders')}}><i className="fa fa-book"></i><p className="Icon-btn-menu-text MobileDisable">Reminders</p></button>
                     <button className="Icon-btn-menu" onClick={()=>{Adapter.open('Speach To Text')}}><i className='fa fa-assistive-listening-systems'></i><p className="Icon-btn-menu-text MobileDisable">Speach to Text</p></button>
-                    <button className="Icon-btn-menu"><i className="fa fa-list-alt"></i><p className="Icon-btn-menu-text MobileDisable">History</p></button>
-                    <button className="Icon-btn-menu Icon-btn-menu-end"><i className="fa fa-info"></i><p className="Icon-btn-menu-text MobileDisable">About</p></button>
+                    <button className="Icon-btn-menu" onClick={()=>{Adapter.open('History')}}><i className="fa fa-list-alt"></i><p className="Icon-btn-menu-text MobileDisable">History</p></button>
+                    <button className="Icon-btn-menu Icon-btn-menu-end" onClick={()=>{Adapter.open('About')}}><i className="fa fa-info"></i><p className="Icon-btn-menu-text MobileDisable">About</p></button>
                 </div>
             </Container>
         </>

@@ -38,6 +38,7 @@ function SpeachToText() {
           const formData = new FormData();
           formData.append('file', blob);
           const response = await axios.post('http://localhost:5000/api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
+          if(response.data.status){setText(response.data.transcription)}
         } catch (error) {
           console.error('Error sending audio to server:', error);
         }

@@ -11,21 +11,21 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 
-
-export function AdminLogs() {
-    const [list, setList] = useState<Array<{ Date: string; Type: string; Message?: string | undefined; Address?: string | undefined; }>>([])
+export function AlertHistory() {
+    const [list, setList] = useState<Array<{OutputType: string; Date: Date; Content: string; DeviceID: string; Location: string;}>>([])
     const [page, setPageProps] = useState<{ PageNo: number; Length: number; }>({ PageNo: 1, Length: 1 })
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Node/GetAdminLogs`, {page: currentPage})).data.List as Array<{ Date: string; Type: string; Message: string; Address: string; }>
+            let List = (await axios.post(`http://192.168.72.101:5000/api/Node/GetHistory`, {page: currentPage})).data.List as Array<{OutputType: string; Date: Date; Content: string; DeviceID: string; Location: string;}>
             setList(List)
+            
         } catch (error) {
             console.log(error)
         }
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://192.168.72.101:5000/api/Node/GetAdminLogsLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://192.168.72.101:5000/api/Node/GetHistoryLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 7 === 0) {
                 length = (length / 7)
             }
@@ -46,6 +46,7 @@ export function AdminLogs() {
         }
         return pagebox
     }
+    useEffect(()=>{getData(1)})
     useEffect(() => { getData(page.PageNo);console.log('first') }, [page.PageNo])
     useEffect(() => { getPageLength(); }, [])
     return (
@@ -53,13 +54,13 @@ export function AdminLogs() {
             <div>
                 <Container>
                     <div className='d-flex gap-2 align-items-center'>
-                        <h3 className='text-white-50'>Admin Logs</h3>
+                        <h3 className='text-white-50'>User History and Activity</h3>
                     </div>
                 </Container>
                 <Container className='MainSetings'>
                     <>
                         {list.map(li => {
-                            return <div className='Border FontStyle1  myCard offset18' style={{marginBottom:'5px'}} >{li.Date+" "+li.Message}</div>
+                            return <div className='Border FontStyle1  myCard offset18' >{li.Date+" "+li.Content+" "+li.Location}</div>
                         })}
                     </>
                 </Container>
