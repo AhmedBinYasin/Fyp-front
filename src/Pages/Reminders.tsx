@@ -2,13 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap'
 import { IAdapter } from '../Components/types';
+import { defaultUrihere } from '../App';
 
 
 
 function ReminderLists({ actHandler, Date, Message, Enable, Adapter }: { actHandler: () => any, Date: Date, Message: string, Enable: boolean, Adapter: IAdapter }) {
     async function Change() {
         try {
-            let { status } = (await axios.post(`http://192.168.72.101:5000/api/Reminders/EnableReminder`, { UserName: 'Ahmed', Date: Date, Message: Message, Enable: Enable })).data as { status: boolean, Message: string | undefined, error: any }
+            let { status } = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/EnableReminder`, { UserName: 'Ahmed', Date: Date, Message: Message, Enable: Enable })).data as { status: boolean, Message: string | undefined, error: any }
             if (status === true) {
                 actHandler()
             }
@@ -45,7 +46,7 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
     const [ReminderList, setReminderList] = useState<Array<{ Date: string, Message: string, Enable: boolean }>>([])
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminder`, { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, Enable: boolean }>
+            let List = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/GetReminder`, { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, Enable: boolean }>
             setReminderList(List)
         } catch (error) {
             console.log(error)
@@ -56,7 +57,7 @@ function Reminders({ Adapter }: { Adapter: IAdapter }) {
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminderLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/GetReminderLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 5 === 0) {
                 length = (length / 5)
             }

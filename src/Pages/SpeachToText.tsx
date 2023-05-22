@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
 import { Container } from 'react-bootstrap'
+import { defaultUrihere } from '../App';
 
 function SpeachToText() {
     const [result, setText] = useState<string | undefined>();
@@ -37,7 +38,7 @@ function SpeachToText() {
         try {
           const formData = new FormData();
           formData.append('file', blob);
-          const response = await axios.post('http://localhost:5000/api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
+          const response = await axios.post('http://'+defaultUrihere+':5000/api/speachtotext/toText', formData, { headers: { 'Content-Type': 'multipart/form-data' }, });
           if(response.data.status){setText(response.data.transcription)}
         } catch (error) {
           console.error('Error sending audio to server:', error);

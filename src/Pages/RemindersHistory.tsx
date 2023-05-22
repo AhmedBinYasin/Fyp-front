@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { IAdapter } from '../Components/types';
+import { defaultUrihere } from '../App';
 
 function ReminderLists({ Date, Message, state, Adapter }: { Date: Date, Message: string, state: string, Adapter: IAdapter }) {
 
@@ -30,7 +31,7 @@ function RemindersHistory({ Adapter }: { Adapter: IAdapter }) {
     const [page, setPageProps] = useState<{ PageNo: number; Length: number; }>({ PageNo: 1, Length: 1 })
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminderHistory`, { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, state: string }>
+            let List = (await axios.post('http://'+defaultUrihere+':5000/api/Reminders/GetReminderHistory', { UserName: 'Ahmed', page: currentPage })).data.List as Array<{ Date: string, Message: string, state: string }>
             setReminderList(List)
         } catch (error) {
             console.log(error)
@@ -38,7 +39,7 @@ function RemindersHistory({ Adapter }: { Adapter: IAdapter }) {
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://192.168.72.101:5000/api/Reminders/GetReminderHistoryLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/GetReminderHistoryLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 5 === 0) {
                 length = (length / 5)
             }

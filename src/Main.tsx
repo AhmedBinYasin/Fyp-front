@@ -25,6 +25,7 @@ import { AdminLogs} from './Pages/Logs';
 import About from './Pages/About';
 import { NodeAlert } from './Pages/NodeAlert';
 import { AlertHistory } from './Pages/Logs copy';
+import { defaultUrihere } from './App';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,6 +36,10 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+interface JavaScriptInterface {
+  sendMessage(Message: string) : any;
+}
+declare var JSInterface: JavaScriptInterface;
 
 function AppView({ Router, Adapter, handleShow, handleClose, show }: { Router: IRouter, Adapter: IAdapter, handleShow: () => void, handleClose: () => void, show: boolean }) {
   return (
@@ -109,7 +114,7 @@ function Main() {
 
 
   useEffect(() => {
-    const socket = io("ws://192.168.72.101:5000", {
+    const socket = io("ws://"+defaultUrihere+":5000", {
       reconnectionDelayMax: 10000,
       auth: {
         token: "123"
@@ -121,12 +126,16 @@ function Main() {
     socket.on("ActivateReminderResponse", (data: { UserName: string; Date: Date; Message: string; }) => {
       console.log('here', data)
       window.postMessage({ type: 'newMessage', content: "" + new Date(data.Date).toDateString() + ', ' + new Date(data.Date).toTimeString().substring(0, 5)+" "+data.Message },'http://192.168.72.101:3000');
+      JSInterface.sendMessage(''+data.Date+' '+data.Message)
+      console.log(JSInterface,'jsq')
       setMessage({ Date: new Date(data.Date), Message: data.Message });
       handleShowAlarm()
     });
     socket.on("ActivateAlert", (data: { Content: string; Location: string | undefined; }) => {
-      window.postMessage({ type: 'newMessage', content: "" + data.Content + ', at Location ' + data.Location },'http://192.168.72.101:3000');
+      window.postMessage({ type: 'newMessage', content: "" + data.Content + ', at Location ' + data.Location },'http://'+defaultUrihere+':3000');
       console.log('here', data)
+      JSInterface.sendMessage(''+data.Content+' '+data.Location)
+      console.log(JSInterface,'jsq')
       setnodeMessage({ Content: data.Content, Location: data.Location });
       handlenodeShowAlarm()
     });

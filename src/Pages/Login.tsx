@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import md5 from 'md5'
+import { defaultUrihere } from '../App';
 
 function Login({ setData }: { setData: (state: object) => void; }) {
     const [Input, setInput] = useState<{ UserName: string; Password: string; ReEnter: string; }>({ UserName: '', Password: '', ReEnter: '' })
@@ -12,7 +13,7 @@ function Login({ setData }: { setData: (state: object) => void; }) {
     function changeToSignup() { onChange('Signup'); setInput({ UserName: '', Password: '', ReEnter: '' }); setMessage(undefined) }
     async function onLogin() {
         try {
-            let { UserName, Message, error } = (await axios.post('http://192.168.72.101:5000/api/auth/Login', { UserName: Input.UserName, Password: md5(Input.Password) })).data
+            let { UserName, Message, error } = (await axios.post('http://'+defaultUrihere+':5000/api/auth/Login', { UserName: Input.UserName, Password: md5(Input.Password) })).data
             if (UserName) { setData(UserName) }
             else if (Message) { setMessage(Message) }
             else { console.log(error) }
@@ -22,7 +23,7 @@ function Login({ setData }: { setData: (state: object) => void; }) {
     async function onSignup() {
         if (Input.Password === Input.ReEnter) {
             try {
-                let { UserName, Message, error } = (await axios.post('http://192.168.72.101:5000/api/auth/CreateUser', { UserName: Input.UserName, Password: md5(Input.Password) })).data
+                let { UserName, Message, error } = (await axios.post('http://'+defaultUrihere+':5000/api/auth/CreateUser', { UserName: Input.UserName, Password: md5(Input.Password) })).data
                 if (UserName) { setData(UserName) }
                 else if (Message) { setMessage(Message) }
                 else { console.log(error) }

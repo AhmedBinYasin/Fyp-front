@@ -1,14 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import MaterialReactTable, { type MRT_ColumnDef } from 'material-react-table';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { defaultUrihere } from '../App';
 
 
 
@@ -17,7 +10,7 @@ export function AdminLogs() {
     const [page, setPageProps] = useState<{ PageNo: number; Length: number; }>({ PageNo: 1, Length: 1 })
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Node/GetAdminLogs`, {page: currentPage})).data.List as Array<{ Date: string; Type: string; Message: string; Address: string; }>
+            let List = (await axios.post(`http://`+defaultUrihere+`:5000/api/Node/GetAdminLogs`, {page: currentPage})).data.List as Array<{ Date: string; Type: string; Message: string; Address: string; }>
             setList(List)
         } catch (error) {
             console.log(error)
@@ -25,7 +18,7 @@ export function AdminLogs() {
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://192.168.72.101:5000/api/Node/GetAdminLogsLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://`+defaultUrihere+`:5000/api/Node/GetAdminLogsLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 7 === 0) {
                 length = (length / 7)
             }

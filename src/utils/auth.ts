@@ -1,4 +1,5 @@
 import axios from "axios";
+import { defaultUrihere } from "../App";
 
 interface PostResponse {
     errors: string;
@@ -9,7 +10,7 @@ interface PostResponse {
 
 async function login(api: string, loginPayload: object) {
     try {
-        const responce = await axios.post<PostResponse>("http://localhost:5000" + api, loginPayload)
+        const responce = await axios.post<PostResponse>("http://"+defaultUrihere+":5000" + api, loginPayload)
         const { errors, Token, PayLoad } = responce.data
         if (errors) { console.log(errors) }
         else {
@@ -24,7 +25,7 @@ async function login(api: string, loginPayload: object) {
 async function veri(api: string) {
     const token: string = localStorage.getItem('token')!
     try {
-        const responce = await axios.get<PostResponse>("http://localhost:5000" + api, {
+        const responce = await axios.get<PostResponse>("http://"+defaultUrihere+":5000" + api, {
             headers: {
                 'authorization': token,
                 'Accept': 'application/json',

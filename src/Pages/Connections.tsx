@@ -1,19 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import dayjs from 'dayjs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
-import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers';
-import { IAdapter } from '../Components/types';
 import axios from 'axios';
-import { NodeIconLarge } from '../Components/Icons/NodeIcon'
+import { defaultUrihere } from '../App';
 
 function Connections() {
     const [List, setList] = useState<Array<{ Node_ID: string, Location: string, Connection: string }>>([])
     async function getData() {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Node/GetConnectedNodes`, {})).data.List as Array<{ Node_ID: string, Location: string, Connection: string }>
+            let List = (await axios.post(`http://`+defaultUrihere+`:5000/api/Node/GetConnectedNodes`, {})).data.List as Array<{ Node_ID: string, Location: string, Connection: string }>
             setList(List)
         } catch (error) {
             console.log(error)

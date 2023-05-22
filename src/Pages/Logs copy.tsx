@@ -1,14 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
-import MaterialReactTable, { type MRT_ColumnDef } from 'material-react-table';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { defaultUrihere } from '../App';
 
 
 export function AlertHistory() {
@@ -16,7 +9,7 @@ export function AlertHistory() {
     const [page, setPageProps] = useState<{ PageNo: number; Length: number; }>({ PageNo: 1, Length: 1 })
     async function getData(currentPage: number) {
         try {
-            let List = (await axios.post(`http://192.168.72.101:5000/api/Node/GetHistory`, {page: currentPage})).data.List as Array<{OutputType: string; Date: Date; Content: string; DeviceID: string; Location: string;}>
+            let List = (await axios.post(`http://`+defaultUrihere+`:5000/api/Node/GetHistory`, {page: currentPage})).data.List as Array<{OutputType: string; Date: Date; Content: string; DeviceID: string; Location: string;}>
             setList(List)
             
         } catch (error) {
@@ -25,7 +18,7 @@ export function AlertHistory() {
     }
     async function getPageLength() {
         try {
-            let length = (await axios.post(`http://192.168.72.101:5000/api/Node/GetHistoryLength`, { UserName: 'Ahmed' })).data.length as number
+            let length = (await axios.post(`http://`+defaultUrihere+`:5000/api/Node/GetHistoryLength`, { UserName: 'Ahmed' })).data.length as number
             if (length % 7 === 0) {
                 length = (length / 7)
             }

@@ -7,6 +7,7 @@ import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers';
 import { IAdapter } from '../Components/types';
 import axios from 'axios';
+import { defaultUrihere } from '../App';
 
 
 
@@ -38,7 +39,7 @@ function ReAddReminders({ Adapter }: { Adapter: IAdapter }) {
         let Date: string = date.format('YYYY-MM-DD');
         let Time: string = time.format('HH:mm')
         try {
-            let status = (await axios.post(`http://localhost:5000/api/Reminders/ReAddReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message })).data.status
+            let status = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/ReAddReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }

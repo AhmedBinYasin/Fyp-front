@@ -7,6 +7,7 @@ import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers';
 import { IAdapter } from '../Components/types';
 import axios from 'axios';
+import { defaultUrihere } from '../App';
 
 
 
@@ -31,14 +32,14 @@ function EditReminders({ Adapter }: { Adapter: IAdapter }) {
         let Date: string = date.format('YYYY-MM-DD');
         let Time: string = time.format('HH:mm')
         try {
-            let status = (await axios.post(`http://192.168.72.101:5000/api/Reminders/UpdateReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message, previous: previous })).data.status
+            let status = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/UpdateReminder`, { Date: Date + 'T' + Time, UserName: 'Ahmed', Message: Message, previous: previous })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }
     }
     async function Confirmdelete() {
         try {
-            let status = (await axios.post(`http://192.168.72.101:5000/api/Reminders/DeleteReminder`, { UserName: 'Ahmed', Message: Message, previous: previous })).data.status
+            let status = (await axios.post(`http://`+defaultUrihere+`:5000/api/Reminders/DeleteReminder`, { UserName: 'Ahmed', Message: Message, previous: previous })).data.status
             if (status) { Adapter.Return(); }
         }
         catch (error) { console.log(error) }

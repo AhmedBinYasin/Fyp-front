@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { defaultUrihere } from '../App';
 
 interface PostResponse {
     errors: string;
@@ -23,7 +24,7 @@ async function post(api: string, Payload: any) {
 
 async function get(api: string) {
     const token: string = localStorage.getItem('token')!
-    const responce = await axios.get<PostResponse>("http://localhost:5000" + api, {
+    const responce = await axios.get<PostResponse>("http://"+defaultUrihere+":5000" + api, {
         headers: {
             'authorization': token,
             'Accept': 'application/json',
