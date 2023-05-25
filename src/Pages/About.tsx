@@ -19,6 +19,8 @@ function About() {
                         <p style={{fontWeight:'bold',textAlign:'center'}}>Faheem Haider</p>
                         <p style={{fontWeight:'bold',textAlign:'center'}}>Arsam Khalid</p>
                         <h2 style={{textAlign:'center',marginBottom:'20vh'}}> </h2>
+                        <h4 style={{textAlign:'center'}}>Suprvised By</h4>
+                        <p style={{fontWeight:'bold',textAlign:'center'}}>Assoc Prof Naima Iltaf, PhD</p>
                     </div>
                 </Container>
             </div>

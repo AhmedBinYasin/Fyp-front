@@ -126,17 +126,14 @@ function Main() {
     socket.on("ActivateReminderResponse", (data: { UserName: string; Date: Date; Message: string; }) => {
       console.log('here', data)
       window.postMessage({ type: 'newMessage', content: "" + new Date(data.Date).toDateString() + ', ' + new Date(data.Date).toTimeString().substring(0, 5)+" "+data.Message },'http://192.168.72.101:3000');
-      JSInterface.sendMessage(''+data.Date+' '+data.Message)
-      console.log(JSInterface,'jsq')
+      JSInterface.sendMessage(''+new Date(data.Date).toTimeString()+' '+data.Message)
       setMessage({ Date: new Date(data.Date), Message: data.Message });
       handleShowAlarm()
     });
     socket.on("ActivateAlert", (data: { Content: string; Location: string | undefined; }) => {
       window.postMessage({ type: 'newMessage', content: "" + data.Content + ', at Location ' + data.Location },'http://'+defaultUrihere+':3000');
-      console.log('here', data)
       JSInterface.sendMessage(''+data.Content+' '+data.Location)
-      console.log(JSInterface,'jsq')
-      setnodeMessage({ Content: data.Content, Location: data.Location });
+      setnodeMessage({ Content: 'Date: '+new Date().toDateString()+' Event: '+data.Content, Location: data.Location });
       handlenodeShowAlarm()
     });
   }, []);

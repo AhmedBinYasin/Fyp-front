@@ -7,7 +7,7 @@ import '../src/styles/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './Pages/Login';
 
-export const defaultUrihere:string='192.168.39.55';
+export const defaultUrihere:string='192.168.152.55';
 
 function App() {
   const [ loginData, set ] = useState()

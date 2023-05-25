@@ -20,7 +20,7 @@ function Home({Adapter}:{Adapter:IAdapter}) {
         dataLabels: { style: { colors: ['#FFFFFF'] } },
 
     }
-    const series = [{ data: [30, 40, 45, 50], }]
+    const series = [{ data: [30, 40, 45, 376] }]
     return (
         <>
             <div>
